@@ -1,0 +1,19 @@
+# Core Data Science
+pandas>=2.2.0
+numpy>=1.26.0
+
+# Visualization
+matplotlib>=3.8.0
+seaborn>=0.13.0
+plotly>=5.18.0
+
+# Machine Learning
+scikit-learn>=1.4.0
+
+# Dashboard & Interactive App
+streamlit>=1.32.0
+
+# Utilities & Notebook support
+ipykernel>=6.29.0
+openpyxl>=3.1.0
+joblib>=1.3.0
