@@ -80,6 +80,9 @@ def clean_superstore_data(df_raw: pd.DataFrame) -> pd.DataFrame:
     # Delivery performance
     df_orders["Delivery Days"] = (df_orders["Ship Date"] - df_orders["Order Date"]).dt.days
 
+    # Ensure Quantity is integer (whole units — float is a CSV import artifact)
+    df_orders["Quantity"] = df_orders["Quantity"].astype(int)
+
     # Financial KPIs
     df_orders["Profit Margin"] = ((df_orders["Profit"] / df_orders["Sales"]) * 100).round(2)
     df_orders["Unit Price"] = (df_orders["Sales"] / df_orders["Quantity"]).round(2)

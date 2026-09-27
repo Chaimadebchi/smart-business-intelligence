@@ -60,10 +60,10 @@ fig = px.scatter(
     hover_data=["Order ID", "Customer Name", "City", "Sub-Category", "Discount", "Profit Margin"],
     color_discrete_map={
         "Normal": "#9CA3AF",
-        "Perte Critique (Marge Négative)": "#DC2626",
+        "Perte Critique (Marge N\u00e9gative)": "#DC2626",
         "Remise Excessive (>= 50%)": "#F59E0B",
         "Vente Exceptionnelle (Blockbuster)": "#10B981",
-        "Profil Atypique": "#8B5CF6"
+        "Profil Transactionnel Atypique": "#8B5CF6"
     },
     title="<b>Distribution des Transactions : Normales vs Types d'Anomalies</b>"
 )

@@ -1,250 +1,331 @@
 # 📊 Smart Business Intelligence & Sales Analytics Platform
 
-[![Python](https://img.shields.io/badge/Python-3.14-blue.svg)](https://www.python.org/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.64-FF4B4B.svg)](https://streamlit.io/)
-[![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-1.9-F7931E.svg)](https://scikit-learn.org/)
-[![Plotly](https://img.shields.io/badge/Plotly-7.1-3F4F75.svg)](https://plotly.com/)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.32%2B-FF4B4B.svg)](https://streamlit.io/)
+[![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-1.4%2B-F7931E.svg)](https://scikit-learn.org/)
+[![Plotly](https://img.shields.io/badge/Plotly-5.18%2B-3F4F75.svg)](https://plotly.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-Une plateforme décisionnelle et d'analytique prédictive de bout en bout conçue pour permettre aux entreprises d'analyser leurs ventes, segmenter leur portefeuille clients, prévoir leurs revenus futurs et détecter automatiquement les anomalies financières.
+> A full end-to-end Business Intelligence and Predictive Analytics platform built in Python, designed to help businesses analyze sales performance, segment their customer base, forecast future revenue, and automatically detect financial anomalies.
 
-**Auteur :** [Chaima Debchi](https://github.com/Chaimadebchi)  
-**Dépôt GitHub :** [smart-business-intelligence](https://github.com/Chaimadebchi/smart-business-intelligence)
-
----
-
-## 📌 Sommaire
-- [1. Problématique Métier & Objectifs](#1-problématique-métier--objectifs)
-- [2. Architecture du Projet](#2-architecture-du-projet)
-- [3. Technologies Utilisées](#3-technologies-utilisées)
-- [4. Dataset & Ingestion](#4-dataset--ingestion)
-- [5. Pipeline de Nettoyage (Data Cleaning)](#5-pipeline-de-nettoyage-data-cleaning)
-- [6. Analyse Exploratoire (EDA) & Découvertes Clés](#6-analyse-exploratoire-eda--découvertes-clés)
-- [7. Machine Learning & Modélisation](#7-machine-learning--modélisation)
-  - [Segmentation Client (K-Means & RFM)](#-segmentation-client-k-means--rfm)
-  - [Prédiction des Ventes (Gradient Boosting)](#-prédiction-des-ventes-gradient-boosting)
-  - [Détection des Anomalies (Isolation Forest)](#-détection-des-anomalies-isolation-forest)
-- [8. Application Interactive Streamlit](#8-application-interactive-streamlit)
-- [9. Arborescence du Code](#9-arborescence-du-code)
-- [10. Guide d'Installation & Utilisation](#10-guide-dinstallation--utilisation)
-- [11. Valorisation CV & LinkedIn](#11-valorisation-cv--linkedin)
+**Author:** [Chaima Debchi](https://github.com/Chaimadebchi)  
+**Repository:** [smart-business-intelligence](https://github.com/Chaimadebchi/smart-business-intelligence)
 
 ---
 
-## 1. Problématique Métier & Objectifs
-
-Dans le secteur du commerce et de la distribution B2B/B2C, les entreprises sont confrontées à quatre défis majeurs :
-1. **Le manque de visibilité sur la rentabilité réelle :** Un chiffre d'affaires élevé masque souvent des produits et des régions fortement déficitaires à cause d'une politique de remises incontrôlée.
-2. **L'uniformisation du marketing client :** Traiter un client fidèle à fort panier moyen de la même manière qu'un client inactif détruit de la valeur.
-3. **L'imprévisibilité des flux financiers :** Incapacité à anticiper les pics saisonniers (ex: Q4 / fin d'exercice budgétaire).
-4. **Les fuites financières invisibles :** Commandes anormales avec des marges destructrices passant sous les radars des contrôleurs de gestion.
-
-### Objectifs atteints par cette plateforme :
-- **Ingestion & Data Cleaning :** Résolution d'un export concaténé réel (10 800 lignes) et imputation justifiée des données manquantes.
-- **Business Intelligence :** Tableaux de bord exécutifs interactifs et cartes géographiques des marges par État.
-- **Segmentation Client RFM :** Identification automatique de 4 personas (*Champions, Active & Loyal, At Risk, Lost*).
-- **Prévision des Ventes :** Modélisation chronologique supervisée atteignant **$R^2 = 71.2\%$** avec Gradient Boosting.
-- **Audit des Anomalies :** Détection automatique de 300 transactions atypiques via **Isolation Forest**.
+## 📌 Table of Contents
+- [Business Problem & Objectives](#-business-problem--objectives)
+- [Features](#-features)
+- [Architecture](#-architecture)
+- [Tech Stack](#-tech-stack)
+- [Dataset](#-dataset)
+- [Machine Learning](#-machine-learning)
+- [Verified Results](#-verified-results)
+- [Project Structure](#-project-structure)
+- [Installation & Usage](#-installation--usage)
+- [Limitations](#-limitations)
+- [Future Improvements](#-future-improvements)
+- [License](#-license)
 
 ---
 
-## 2. Architecture du Projet
+## 🎯 Business Problem & Objectives
 
-```mermaid
-graph TD
-    A[Données Brutes: Superstore CSV] --> B[Pipeline Data Cleaning: src/data_processing.py]
-    B --> C[Données Propres: cleaned_superstore.csv]
-    
-    C --> D[EDA & Insights: notebooks/02_exploratory_analysis.ipynb]
-    C --> E[Customer Segmentation: src/segmentation.py]
-    C --> F[Sales Forecasting: src/prediction.py]
-    C --> G[Anomaly Detection: src/anomaly_detection.py]
-    
-    E --> H[K-Means Model & customer_segments.csv]
-    F --> I[Gradient Boosting Model & sales_forecast.csv]
-    G --> J[Isolation Forest Model & anomalies_detected.csv]
-    
-    C --> K[Streamlit Interactive Dashboard: dashboard/app.py]
-    H --> K
-    I --> K
-    J --> K
+In B2B/B2C commerce and distribution, businesses face four recurring challenges:
+
+1. **Hidden profitability gaps** — high revenue can mask deeply unprofitable products and regions, often caused by uncontrolled discount policies.
+2. **Uniform customer treatment** — treating a high-value loyal customer the same way as a dormant one destroys value.
+3. **Unpredictable cash flows** — inability to anticipate seasonal peaks (e.g., Q4 / fiscal year-end).
+4. **Invisible financial leaks** — anomalous orders with destructive margins that escape standard financial controllers.
+
+### This platform addresses all four by providing:
+
+| Module | Objective |
+|:---|:---|
+| **Data Cleaning & EDA** | Ingest, clean, and enrich raw transactional data with business-relevant features |
+| **Sales Analytics** | Interactive KPI dashboards with geographic and temporal breakdowns |
+| **Customer Segmentation (RFM + K-Means)** | Automatically identify 4 customer personas for targeted marketing |
+| **Sales Forecasting (Gradient Boosting)** | Predict future monthly revenue without data leakage |
+| **Anomaly Detection (Isolation Forest)** | Surface financially unusual transactions for audit and investigation |
+| **Interactive Dashboard (Streamlit)** | Deliver all insights through a multi-page, filterable web application |
+
+---
+
+## ✨ Features
+
+- 📊 **Executive Dashboard** — real-time KPIs, monthly sales & profit trends, category breakdown, top-10 products
+- 🛍️ **Sales Analysis** — multi-criteria filters (date, region, category, sub-category), profitability charts, state-level performance table, CSV export
+- 👥 **Customer Segmentation** — RFM scatter plots, segment profile summary, filterable customer directory
+- 📈 **Sales Prediction** — actual vs. predicted chart with shaded test period, model comparison table, growth scenario simulator
+- 🚨 **Anomaly Detection** — algorithmic transaction map, categorized anomaly audit table, CSV export for controllers
+
+---
+
+## 🏗️ Architecture
+
+```text
+Raw Data (sample_superstore.csv)
+         ↓
+  Data Cleaning (src/data_processing.py)
+         ↓
+  Cleaned Dataset (9,994 rows)
+         ↓
+ ┌─────────────────┬──────────────────┬────────────────────┐
+ ↓                 ↓                  ↓
+RFM + K-Means   Sales Prediction   Anomaly Detection
+(segmentation)  (prediction.py)    (anomaly_detection.py)
+ ↓                 ↓                  ↓
+ └─────────────────┴──────────────────┴────────────────────┘
+                        ↓
+              Streamlit Dashboard (dashboard/app.py)
+```
+
+**Data flow:**
+```
+data/raw/sample_superstore.csv
+  → src/data_processing.py → data/processed/cleaned_superstore.csv
+  → src/segmentation.py    → data/processed/customer_segments.csv + models/kmeans_*.pkl
+  → src/prediction.py      → data/processed/sales_forecast.csv + models/best_sales_model.pkl
+  → src/anomaly_detection.py → data/processed/anomalies_detected.csv + models/isolation_forest_model.pkl
+  → dashboard/app.py       → Streamlit multi-page web application
 ```
 
 ---
 
-## 3. Technologies Utilisées
+## 🛠️ Tech Stack
 
-- **Langage :** Python 3.14+
-- **Manipulation & Calcul :** Pandas, NumPy
-- **Visualisation Interactive :** Plotly Express, Plotly Graph Objects, Seaborn, Matplotlib
-- **Machine Learning :** Scikit-Learn (K-Means, Gradient Boosting, Random Forest, Isolation Forest, StandardScaler)
-- **Déploiement UI :** Streamlit
-- **Environnement & Versioning :** JupyterLab, Git, Virtualenv (`venv`)
-
----
-
-## 4. Dataset & Ingestion
-
-Le projet repose sur le dataset commercial de référence **Sample Superstore** enrichi :
-- **Volume :** 9 994 transactions de commandes complètes (2015 à 2018).
-- **Chiffre d'affaires total :** **2 297 200,86 $**
-- **Bénéfice net total :** **286 397,02 $** (marge globale de 12,47%)
-- **Clients uniques :** **793 clients** répartis sur les segments *Consumer*, *Corporate* et *Home Office*.
-- **Commandes uniques :** **5 009 commandes**.
+| Layer | Tools |
+|:---|:---|
+| Language | Python 3.10+ |
+| Data Manipulation | Pandas, NumPy |
+| Machine Learning | Scikit-learn (K-Means, GradientBoosting, IsolationForest, StandardScaler) |
+| Visualization | Plotly Express/Graph Objects, Matplotlib, Seaborn |
+| Dashboard | Streamlit |
+| Environment | Virtualenv (`venv`), Jupyter / ipykernel |
+| Serialization | Joblib |
 
 ---
 
-## 5. Pipeline de Nettoyage (Data Cleaning)
+## 📦 Dataset
 
-Toutes les décisions de nettoyage sont documentées et implémentées dans [`src/data_processing.py`](src/data_processing.py) et [`notebooks/01_data_cleaning.ipynb`](notebooks/01_data_cleaning.ipynb) :
+**Source:** [Superstore Sales Dataset](https://www.kaggle.com/datasets/vivek468/superstore-dataset-final) — a widely used benchmark dataset in business analytics.
 
-1. **Découpage des tables imbriquées :** Les 9 994 premières lignes constituent la table des commandes. La table des retours annexée a été exploitée pour créer un indicateur binaire métier `Returned` (`Yes`/`No`), révélant **800 articles renvoyés**.
-2. **Imputation du code postal manquant :** 11 valeurs manquantes de code postal appartenaient à *Burlington, Vermont*. Le code officiel `05401` a été réinjecté avec formatage à 5 chiffres (correction du zéro initial tronqué lors de transferts Excel).
-3. **Typage temporel :** Conversion de `Order Date` et `Ship Date` en objets datetime.
-4. **Feature Engineering :**
-   - Variables calendaires : `Order Year`, `Order Month`, `Order YearMonth`, `Order Quarter`, `Order DayOfWeek`.
-   - Logistique : `Delivery Days` (délai de livraison constaté entre 0 et 7 jours).
-   - Indicateurs financiers : `Profit Margin (%)`, `Unit Price ($)`, `Discount Amount ($)`.
+**Raw file:** `data/raw/sample_superstore.csv`
 
----
+The raw CSV contains 10,800 rows across 21 columns, including an embedded `Returns` auxiliary table appended after the main orders table. The data cleaning pipeline separates these, creates a binary `Returned` flag, imputes 11 missing postal codes (Burlington, VT — leading zero truncated by Excel), and adds 11 derived features.
 
-## 6. Analyse Exploratoire (EDA) & Découvertes Clés
-
-L'analyse exploratoire a mis en lumière des insights business à fort impact :
-
-| Domaine | Découverte Majeure | Chiffres Clés |
-| :--- | :--- | :--- |
-| **Produits** | La catégorie **Furniture** génère un fort volume mais un profit dérisoire. | 32,3% des ventes mais seulement 2,5% de marge nette (18 451 $ de profit). |
-| **Sous-Catégories** | **Tables** et **Bookcases** détruisent massivement de la valeur. | Tables : **-17 725 $ de perte nette** ! Copiers : **+55 618 $ de profit (marge 37,2%)**. |
-| **Géographie** | **Le Texas, l'Ohio et la Pennsylvanie** sont des puits de pertes. | Texas : **-25 729 $ de perte** due à des remises locales dépassant souvent 60%. |
-| **Saisonnalité** | Pic massif des ventes en **Novembre et Décembre (Q4)**. | Novembre (352 k$) et Décembre (325 k$) dépassent le double des ventes de Janvier (94 k$). |
+| Attribute | Value |
+|:---|:---|
+| **Cleaned rows** | 9,994 transactions |
+| **Date range** | 2015-01-03 → 2018-12-30 |
+| **Total columns after cleaning** | 32 |
+| **Missing values after cleaning** | 0 |
+| **Duplicate rows** | 0 |
 
 ---
 
-## 7. Machine Learning & Modélisation
+## 🤖 Machine Learning
 
-### 👥 Segmentation Client (K-Means & RFM)
-- **Variables :** Récence (jours), Fréquence (commandes), Valeur Monétaire ($ dépensés).
-- **Transformation :** Log-transform (`np.log1p`) pour corriger l'asymétrie financière + standardisation (`StandardScaler`).
-- **Choix du nombre de clusters :** $K = 4$ validé par la méthode du coude et le score Silhouette (0.255).
-- **Segments identifiés :**
-  1. **Champions / High Value (258 clients) :** 4 773 $ de panier moyen cumulé, fréquence de 8,6 commandes.
-  2. **Active & Loyal (199 clients) :** Récence record (moyenne de 20 jours), clients actifs réguliers.
-  3. **At Risk / Slipping (253 clients) :** Inactifs depuis 235 jours en moyenne.
-  4. **Lost / Dormant (83 clients) :** Inactifs depuis près d'un an, faible valeur cumulée (432 $).
+### 👥 Customer Segmentation — RFM + K-Means
 
-### 📈 Prédiction des Ventes (Gradient Boosting)
-- **Problématique :** Prédire le chiffre d'affaires mensuel futur sans fuite de données (*Data Leakage*).
-- **Séparation chronologique :** Entraînement sur 2015-2017 (36 mois), Test hors échantillon sur 2018 (12 mois).
-- **Variables explicatives :** `Month`, `Quarter`, `Lag_1`, `Lag_2`, `Lag_12` (saisonnalité annuelle), `Rolling_Mean_3`.
-- **Comparaison des modèles :**
+**RFM metrics** are computed per customer on the full transaction history:
+- **Recency (R):** Days since the customer's last order (lower = more active)
+- **Frequency (F):** Number of unique orders placed
+- **Monetary (M):** Total revenue generated by the customer
 
-| Modèle | MAE ($) | RMSE ($) | $R^2$ Score |
-| :--- | :---: | :---: | :---: |
-| **Gradient Boosting (Sélectionné)** | **12 056 $** | **13 838 $** | **0.7117 (71.2%)** |
-| Linear Regression | 12 348 $ | 15 240 $ | 0.6504 (65.0%) |
-| Random Forest | 14 291 $ | 16 342 $ | 0.5980 (59.8%) |
+**Why log transformation?** RFM distributions are heavily right-skewed (a few customers spend orders of magnitude more). `np.log1p` compresses the scale and makes K-Means distance meaningful.
 
-### 🚨 Détection des Anomalies (Isolation Forest)
-- **Objectif :** Isoler les transactions s'écartant statistiquement de la normale (contamination = 3%, soit 300 transactions).
-- **Variables d'analyse :** `Sales`, `Profit`, `Quantity`, `Discount`, `Profit Margin`.
-- **Classification métier des anomalies :**
-  - **Pertes Critiques :** Commandes avec remises excessives générant jusqu'à -6 599 $ de perte sur une vente.
-  - **Remises Abusives :** Remises $\ge 50\%$.
-  - **Ventes Blockbusters :** Commandes exceptionnelles dépassant 10 000 $ de chiffre d'affaires et 5 000 $ de marge nette.
+**Why StandardScaler?** After log-transform, each RFM dimension still has a different scale. StandardScaler brings all three to zero-mean / unit-variance so that no single dimension dominates the Euclidean distance.
+
+**Why K=4?** Validated by the elbow method (within-cluster inertia) and confirmed by the Silhouette Score.
+
+**Cluster naming:** Labels are assigned programmatically based on actual cluster characteristics — not arbitrarily:
+- Cluster with highest average Monetary → **Champions / High Value**
+- Cluster with highest average Recency (most inactive) → **Lost / Dormant**
+- Of the remaining two, lower Recency → **Active & Loyal**, higher Recency → **At Risk / Slipping**
+
+### 📈 Sales Forecasting — Gradient Boosting
+
+**Strict temporal split** (no data leakage):
+- Train: 2015–2017 (36 monthly observations)
+- Test: 2018 (12 monthly observations — fully out-of-sample)
+
+**Features engineered on the monthly aggregated series:**
+- `Month`, `Quarter` — calendar seasonality
+- `Lag_1`, `Lag_2` — short-term momentum
+- `Lag_12` — annual seasonality (same month, prior year)
+- `Rolling_Mean_3` — smoothed recent trend (computed on lagged values to prevent leakage)
+
+### 🚨 Anomaly Detection — Isolation Forest
+
+Isolation Forest isolates anomalies by randomly partitioning the feature space. Anomalous points require fewer partitions to isolate (shorter path length).
+
+**Features used:** `Sales`, `Profit`, `Quantity`, `Discount`, `Profit Margin`
+
+**Contamination rate:** 3% → 300 flagged transactions out of 9,994.
+
+**Business categorization of detected anomalies:**
+- **Critical Loss** — `Profit < -500 $` (destructive discount or pricing error)
+- **Excessive Discount** — `Discount ≥ 50%` (margin killer)
+- **Blockbuster Sale** — `Sales > 3,000 $ AND Profit > 1,000 $` (positive outlier)
+- **Atypical Profile** — other statistically unusual transactions
 
 ---
 
-## 8. Application Interactive Streamlit
+## 📊 Verified Results
 
-L'application web est structurée en 5 vues interactives :
-1. **🏠 Vue Exécutive (Overview) :** Cartes KPI globales, évolution temporelle des ventes, ventes vs profits par catégorie et top produits.
-2. **🛍️ Sales Analysis :** Filtres multicritères (date, région, catégorie, sous-catégorie) avec recalcul dynamique des métriques et export CSV.
-3. **👥 Customer Segmentation :** Cartographie 2D/3D des clusters RFM, fiche profil des personas et moteur de recherche client.
-4. **📈 Sales Prediction :** Visualisation réel vs prédit, métriques du modèle et simulateur de scénarios prévisionnels de croissance.
-5. **🚨 Anomaly Detection :** Cartographie interactive des anomalies financières et tableau d'audit exportable pour les contrôleurs de gestion.
+> ⚠️ All metrics below were computed directly by running the project pipelines on the real dataset. No value is estimated or invented.
+
+### Dataset
+
+| Metric | Value |
+|:---|:---|
+| Total Revenue (2015-2018) | $2,297,200.86 |
+| Total Profit | $286,397.02 |
+| Overall Profit Margin | 12.47% |
+| Unique Customers | 793 |
+| Unique Orders | 5,009 |
+| Unique Products | 1,862 |
+| Transactions with Negative Profit | 1,871 (18.7%) |
+
+### Category Performance
+
+| Category | Sales | Profit | Margin |
+|:---|:---:|:---:|:---:|
+| Technology | $836,154 | $145,455 | 17.4% |
+| Office Supplies | $719,047 | $122,491 | 17.0% |
+| Furniture | $742,000 | $18,451 | 2.5% |
+
+### Customer Segmentation (RFM + K-Means, K=4, Silhouette=0.2553)
+
+| Segment | Customers | Avg Recency (days) | Avg Frequency (orders) | Avg Monetary ($) |
+|:---|:---:|:---:|:---:|:---:|
+| Champions / High Value | 258 | 103.3 | 8.6 | $4,773 |
+| Active & Loyal | 199 | 19.7 | 6.8 | $2,713 |
+| At Risk / Slipping | 253 | 235.2 | 4.9 | $1,937 |
+| Lost / Dormant | 83 | 326.5 | 2.6 | $432 |
+
+### Sales Prediction (Gradient Boosting — Test: 2018, 12 months)
+
+| Model | MAE ($) | RMSE ($) | R² |
+|:---|:---:|:---:|:---:|
+| **Gradient Boosting** ✅ | **12,056** | **13,838** | **0.7117** |
+| Linear Regression | 12,348 | 15,240 | 0.6504 |
+| Random Forest | 14,291 | 16,342 | 0.5980 |
+
+### Anomaly Detection (Isolation Forest, contamination=3%)
+
+| Anomaly Type | Count |
+|:---|:---:|
+| Excessive Discount (≥ 50%) | 117 |
+| Atypical Transactional Profile | 101 |
+| Critical Loss (Profit < -500$) | 49 |
+| Blockbuster Sale | 33 |
+| **Total flagged** | **300** |
 
 ---
 
-## 9. Arborescence du Code
+## 📁 Project Structure
 
 ```text
 smart-business-intelligence/
+│
 ├── data/
 │   ├── raw/
-│   │   └── sample_superstore.csv          # Données brutes
+│   │   └── sample_superstore.csv          # Raw Superstore dataset (10,800 rows)
 │   └── processed/
-│       ├── cleaned_superstore.csv         # Données nettoyées (9 994 lignes)
-│       ├── customer_segments.csv          # Base clients avec clusters RFM
-│       ├── sales_forecast.csv             # Historique et prédictions
-│       └── anomalies_detected.csv         # Transactions signalées
+│       ├── cleaned_superstore.csv         # Cleaned dataset (9,994 rows, 32 columns)
+│       ├── customer_segments.csv          # RFM + cluster labels per customer
+│       ├── sales_forecast.csv             # Monthly actuals + 2018 predictions
+│       └── anomalies_detected.csv         # Full dataset with anomaly flags
 │
 ├── notebooks/
-│   ├── 01_data_cleaning.ipynb             # Ingestion et nettoyage
-│   ├── 02_exploratory_analysis.ipynb      # EDA et découvertes business
-│   ├── 03_customer_segmentation.ipynb     # RFM et K-Means
-│   ├── 04_sales_prediction.ipynb          # Modélisation ML & séries temporelles
-│   └── 05_anomaly_detection.ipynb         # Isolation Forest
+│   ├── 01_data_cleaning.ipynb             # Data ingestion, cleaning, feature engineering
+│   ├── 02_exploratory_analysis.ipynb      # EDA, business insights
+│   ├── 03_customer_segmentation.ipynb     # RFM + K-Means clustering
+│   ├── 04_sales_prediction.ipynb          # Time series ML forecasting
+│   └── 05_anomaly_detection.ipynb         # Isolation Forest anomaly detection
 │
 ├── src/
-│   ├── data_processing.py                 # Pipeline de nettoyage modulaire
-│   ├── visualization.py                   # Graphiques Plotly et Seaborn
-│   ├── segmentation.py                    # Pipeline de clustering RFM
-│   ├── prediction.py                      # Pipeline prédictif supervisé
-│   └── anomaly_detection.py               # Pipeline Isolation Forest
+│   ├── data_processing.py                 # Modular cleaning pipeline
+│   ├── visualization.py                   # Reusable Plotly/Seaborn chart functions
+│   ├── segmentation.py                    # RFM computation + K-Means pipeline
+│   ├── prediction.py                      # Monthly feature engineering + model training
+│   └── anomaly_detection.py               # Isolation Forest pipeline
 │
 ├── dashboard/
-│   ├── app.py                             # Point d'entrée principal Streamlit
+│   ├── app.py                             # Streamlit main entry point (Overview)
 │   └── pages/
-│       ├── 1_Sales_Analysis.py            # Page d'analyse détaillée
-│       ├── 2_Customer_Segmentation.py     # Page personas clients
-│       ├── 3_Sales_Prediction.py          # Page prévisions & simulateur
-│       └── 4_Anomaly_Detection.py         # Page audit des anomalies
+│       ├── 1_Sales_Analysis.py            # Detailed sales & profitability analysis
+│       ├── 2_Customer_Segmentation.py     # RFM cluster explorer
+│       ├── 3_Sales_Prediction.py          # Forecast viewer & growth simulator
+│       └── 4_Anomaly_Detection.py         # Anomaly audit table
 │
 ├── models/
-│   ├── kmeans_model.pkl                   # Modèle de clustering entraîné
-│   ├── kmeans_scaler.pkl                  # Normaliseur StandardScaler
-│   ├── best_sales_model.pkl               # Modèle Gradient Boosting entraîné
-│   └── isolation_forest_model.pkl         # Modèle Isolation Forest
+│   ├── kmeans_model.pkl                   # Fitted K-Means model (k=4)
+│   ├── kmeans_scaler.pkl                  # Fitted StandardScaler for RFM
+│   ├── best_sales_model.pkl               # Fitted Gradient Boosting regressor
+│   └── isolation_forest_model.pkl         # Fitted Isolation Forest
 │
-├── screenshots/                           # Captures d'écran de l'application
-├── requirements.txt                       # Dépendances verrouillées
-├── .gitignore                             # Exclusion des fichiers temporaires & venv
-└── README.md                              # Documentation complète du projet
+├── screenshots/                           # Dashboard screenshots (for GitHub preview)
+├── requirements.txt                       # Python dependencies with minimum versions
+├── .gitignore                             # Excludes venv, __pycache__, .env, etc.
+└── README.md                              # This file
 ```
 
 ---
 
-## 10. Guide d'Installation & Utilisation
+## 🚀 Installation & Usage
 
-### 1. Prérequis
-- Python 3.10 ou version ultérieure installé sur votre machine.
-- Git installé.
+### Prerequisites
 
-### 2. Cloner le projet
+- Python 3.10 or higher
+- Git
+
+### 1. Clone the repository
+
 ```bash
 git clone https://github.com/Chaimadebchi/smart-business-intelligence.git
 cd smart-business-intelligence
 ```
 
-### 3. Créer et activer l'environnement virtuel
-Sous Windows (PowerShell) :
+### 2. Create and activate a virtual environment
+
+**Windows (PowerShell):**
 ```powershell
 python -m venv venv
 .\venv\Scripts\Activate.ps1
 ```
-Sous Linux / macOS :
+
+> ⚠️ **PowerShell execution policy issue?** If you see `cannot be loaded because running scripts is disabled`, run:
+> ```powershell
+> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+> ```
+> Alternatively, use CMD instead:
+> ```cmd
+> venv\Scripts\activate.bat
+> ```
+> Or run everything directly with the venv Python:
+> ```bash
+> venv\Scripts\python.exe your_script.py
+> ```
+
+**Linux / macOS:**
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-### 4. Installer les dépendances
+### 3. Install dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### 5. Exécuter les pipelines de données et Machine Learning
+### 4. Run the data and ML pipelines
+
+These steps generate all processed data and trained models. They only need to be run once — processed outputs are already included in the repository.
+
 ```bash
 python src/data_processing.py
 python src/segmentation.py
@@ -252,26 +333,50 @@ python src/prediction.py
 python src/anomaly_detection.py
 ```
 
-### 6. Lancer l'application interactive Streamlit
+### 5. Launch the Streamlit dashboard
+
 ```bash
 streamlit run dashboard/app.py
 ```
-L'application s'ouvre automatiquement dans votre navigateur à l'adresse `http://localhost:8501`.
+
+Or if using the venv directly (no activation):
+```bash
+venv\Scripts\streamlit.exe run dashboard/app.py   # Windows
+venv/bin/streamlit run dashboard/app.py            # Linux/macOS
+```
+
+The application opens automatically in your browser at `http://localhost:8501`.
 
 ---
 
-## 11. Valorisation CV & LinkedIn
+## ⚠️ Limitations
 
-### Formulations prêtes à l'emploi pour ton CV :
-> **Projet Data Science & BI : Smart Business Intelligence & Sales Analytics Platform (Python, Streamlit, Scikit-Learn)**  
-> - Conception d'une plateforme d'aide à la décision analysant 2,3 M$ de transactions commerciales.  
-> - Nettoyage et enrichissement d'un jeu de données complexe (imputation justifiée, feature engineering temporel et financier).  
-> - Implémentation d'une segmentation client RFM avec **K-Means** (identification de 4 personas stratégiques).  
-> - Développement d'un modèle prédictif des ventes avec **Gradient Boosting** ($R^2 = 71,2\%$, MAE = 12 056 $) sans fuite de données temporelle.  
-> - Détection non supervisée des anomalies financières avec **Isolation Forest** (identification de 300 transactions critiques).  
-> - Déploiement d'un dashboard interactif multi-pages avec **Streamlit** et **Plotly**.
+This project is honest about what it can and cannot claim:
+
+- **Static historical dataset** — the Superstore dataset covers 2015-2018 only. Insights do not automatically transfer to different time periods, markets, or industries.
+- **Small training window for forecasting** — the prediction model is trained on 36 monthly points (2015-2017), which limits its statistical reliability. A real production forecaster would require significantly more history.
+- **Segmentation based on historical behavior** — RFM clusters reflect past purchasing patterns. A customer labeled "Lost" may have churned for reasons not captured in the data.
+- **Anomalies require business validation** — a statistical anomaly is not evidence of fraud. Each flagged transaction requires human review and domain knowledge before any action.
+- **No production deployment** — the dashboard runs locally. It is not deployed, authenticated, or connected to a live database.
+- **No real-time data ingestion** — the pipeline is batch-based. Data must be re-run manually when new data arrives.
 
 ---
 
-## 📜 Licence
-Projet distribué sous licence MIT. Libre d'utilisation pour des projets académiques et professionnels.
+## 🔭 Future Improvements
+
+| Area | Improvement |
+|:---|:---|
+| **Data** | Connect to a live SQL/NoSQL database instead of static CSV |
+| **Ingestion** | Build an automated ETL pipeline (e.g., Apache Airflow or Prefect) |
+| **Forecasting** | Explore Prophet or LSTM for longer-horizon, multi-step forecasting |
+| **Backend** | Expose predictions via a FastAPI REST API |
+| **Deployment** | Deploy on Streamlit Cloud, Heroku, or a Docker container |
+| **Security** | Add authentication to the dashboard (Streamlit `st.login`) |
+| **Monitoring** | Track model drift over time with evidently.ai or similar |
+| **Testing** | Add unit tests for `src/` pipeline functions with pytest |
+
+---
+
+## 📜 License
+
+Distributed under the MIT License. Free to use for academic and professional portfolio purposes.
