@@ -1,4 +1,4 @@
-# 📊 Smart Business Intelligence & Sales Analytics Platform
+# Smart Business Intelligence & Sales Analytics Platform
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.32%2B-FF4B4B.svg)](https://streamlit.io/)
@@ -13,7 +13,7 @@
 
 ---
 
-## 📌 Table of Contents
+## Table of Contents
 - [Business Problem & Objectives](#-business-problem--objectives)
 - [Features](#-features)
 - [Architecture](#-architecture)
@@ -29,7 +29,7 @@
 
 ---
 
-## 🎯 Business Problem & Objectives
+## Business Problem & Objectives
 
 In B2B/B2C commerce and distribution, businesses face four recurring challenges:
 
@@ -51,17 +51,17 @@ In B2B/B2C commerce and distribution, businesses face four recurring challenges:
 
 ---
 
-## ✨ Features
+## Features
 
-- 📊 **Executive Dashboard** — real-time KPIs, monthly sales & profit trends, category breakdown, top-10 products
-- 🛍️ **Sales Analysis** — multi-criteria filters (date, region, category, sub-category), profitability charts, state-level performance table, CSV export
-- 👥 **Customer Segmentation** — RFM scatter plots, segment profile summary, filterable customer directory
-- 📈 **Sales Prediction** — actual vs. predicted chart with shaded test period, model comparison table, growth scenario simulator
-- 🚨 **Anomaly Detection** — algorithmic transaction map, categorized anomaly audit table, CSV export for controllers
+- **Executive Dashboard** — real-time KPIs, monthly sales & profit trends, category breakdown, top-10 products
+- **Sales Analysis** — multi-criteria filters (date, region, category, sub-category), profitability charts, state-level performance table, CSV export
+- **Customer Segmentation** — RFM scatter plots, segment profile summary, filterable customer directory
+- **Sales Prediction** — actual vs. predicted chart with shaded test period, model comparison table, growth scenario simulator
+- **Anomaly Detection** — algorithmic transaction map, categorized anomaly audit table, CSV export for controllers
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```text
 Raw Data (sample_superstore.csv)
@@ -92,7 +92,7 @@ data/raw/sample_superstore.csv
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Tools |
 |:---|:---|
@@ -106,7 +106,7 @@ data/raw/sample_superstore.csv
 
 ---
 
-## 📦 Dataset
+## Dataset
 
 **Source:** [Superstore Sales Dataset](https://www.kaggle.com/datasets/vivek468/superstore-dataset-final) — a widely used benchmark dataset in business analytics.
 
@@ -124,9 +124,9 @@ The raw CSV contains 10,800 rows across 21 columns, including an embedded `Retur
 
 ---
 
-## 🤖 Machine Learning
+## Machine Learning
 
-### 👥 Customer Segmentation — RFM + K-Means
+### Customer Segmentation — RFM + K-Means
 
 **RFM metrics** are computed per customer on the full transaction history:
 - **Recency (R):** Days since the customer's last order (lower = more active)
@@ -144,7 +144,7 @@ The raw CSV contains 10,800 rows across 21 columns, including an embedded `Retur
 - Cluster with highest average Recency (most inactive) → **Lost / Dormant**
 - Of the remaining two, lower Recency → **Active & Loyal**, higher Recency → **At Risk / Slipping**
 
-### 📈 Sales Forecasting — Gradient Boosting
+### Sales Forecasting — Gradient Boosting
 
 **Strict temporal split** (no data leakage):
 - Train: 2015–2017 (36 monthly observations)
@@ -156,7 +156,7 @@ The raw CSV contains 10,800 rows across 21 columns, including an embedded `Retur
 - `Lag_12` — annual seasonality (same month, prior year)
 - `Rolling_Mean_3` — smoothed recent trend (computed on lagged values to prevent leakage)
 
-### 🚨 Anomaly Detection — Isolation Forest
+### Anomaly Detection — Isolation Forest
 
 Isolation Forest isolates anomalies by randomly partitioning the feature space. Anomalous points require fewer partitions to isolate (shorter path length).
 
@@ -172,9 +172,9 @@ Isolation Forest isolates anomalies by randomly partitioning the feature space. 
 
 ---
 
-## 📊 Verified Results
+## Verified Results
 
-> ⚠️ All metrics below were computed directly by running the project pipelines on the real dataset. No value is estimated or invented.
+> All metrics below were computed directly by running the project pipelines on the real dataset. No value is estimated or invented.
 
 ### Dataset
 
@@ -225,7 +225,7 @@ Isolation Forest isolates anomalies by randomly partitioning the feature space. 
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```text
 smart-business-intelligence/
@@ -275,7 +275,7 @@ smart-business-intelligence/
 
 ---
 
-## 🚀 Installation & Usage
+## Installation & Usage
 
 ### Prerequisites
 
@@ -297,7 +297,7 @@ python -m venv venv
 .\venv\Scripts\Activate.ps1
 ```
 
-> ⚠️ **PowerShell execution policy issue?** If you see `cannot be loaded because running scripts is disabled`, run:
+> **PowerShell execution policy issue?** If you see `cannot be loaded because running scripts is disabled`, run:
 > ```powershell
 > Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 > ```
@@ -349,7 +349,7 @@ The application opens automatically in your browser at `http://localhost:8501`.
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 This project is honest about what it can and cannot claim:
 
@@ -362,7 +362,7 @@ This project is honest about what it can and cannot claim:
 
 ---
 
-## 🔭 Future Improvements
+## Future Improvements
 
 | Area | Improvement |
 |:---|:---|
@@ -377,6 +377,6 @@ This project is honest about what it can and cannot claim:
 
 ---
 
-## 📜 License
+## License
 
 Distributed under the MIT License. Free to use for academic and professional portfolio purposes.
